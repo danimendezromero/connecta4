@@ -1,5 +1,0 @@
-nombre;12;1
-nombre;12;1
-asdf;1;4
-qwerty;12;7
-qwe;13;5
