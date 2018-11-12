@@ -55,7 +55,7 @@ public class Jugador {
         return tiradas;
     }
 
-    public void setTiradas(int tiradas) {
+    public void setTiradas() {
         this.tiradas=this.tiradas+1;
     }
     
