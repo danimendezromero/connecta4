@@ -13,7 +13,7 @@ public class Tablero {
     private Casilla [][] casillas;
 
     public Tablero() {
-        casillas = new Casilla[7][6];
+        casillas = new Casilla[4][4];
     }
     
     public Tablero(Casilla[][] casillas) {
@@ -22,8 +22,8 @@ public class Tablero {
     
     public boolean comprobarTableroLleno(){
         boolean estaLleno = true;
-        for (int x = 0; x < 7; x++) {
-            for (int y = 0; y < 6; y++) {
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
                 Ficha f = new Ficha(x, y);
                 if (!this.getCasilla(x,y).estaOcupada()) {
                     estaLleno = false;
@@ -37,11 +37,12 @@ public class Tablero {
     }
     public boolean comprobarColumna(int x, Ficha f){
         boolean columnaLlena = true;
-        for(int y=0; y <=6;y++){
+        for(int y=0; y <4;y++){
             if(!casillas[x][y].estaOcupada()){
                 f.setY(y);
                 columnaLlena = false;
                 insertarFicha(f);
+                break;
             }  
         }
         return columnaLlena;
@@ -53,14 +54,14 @@ public class Tablero {
         return casillas[x][y];
     }
     public String toString() {
-        String txt = "|---|---|---|---|---|---|---|\n";
-        for(int y=5;y>=0;y--){
+        String txt = "|---|---|---|---|\n";
+        for(int y=3;y>=0;y--){
             txt += "|";
-            for(int x=0;x<7;x++){
-                txt += " "+casillas[x][y].getFicha()+" |";
+            for(int x=0;x<4;x++){
+                txt += " "+casillas[x][y].getFicha().getCaracter()+" |";
             }
             txt +="\n";
-            txt +="|---|---|---|---|---|---|---|\n";
+            txt +="|---|---|---|---|\n";
         }
         return txt;
     }

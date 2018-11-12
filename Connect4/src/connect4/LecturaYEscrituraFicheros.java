@@ -27,7 +27,7 @@ public interface LecturaYEscrituraFicheros {
         //se crea un bucle para cada linea donde si la linea no esta vacia entrara dentro del while
         while (linea != null) {
             datos = linea.split(";");
-            Jugador jugadores = new Jugador(datos[0], Integer.parseInt(datos[1]), Integer.parseInt(datos[2]));
+            Jugador jugadores = new Jugador(datos[0]);
             // en cada linea se cojeran los valores de nombre, numero de partidas ganadas y numero de tiradas, coje cada valor separandolo por ";"
             ranking.add(jugadores);
             //añadimos cada jugador al arraylist ranking del menu principal

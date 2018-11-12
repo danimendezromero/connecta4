@@ -10,6 +10,7 @@ public class Ficha {
     private int y;
 
     public Ficha() {
+        this.caracter = ' ';
     }
 
     public Ficha(char caracter, int x, int y) {
@@ -19,6 +20,7 @@ public class Ficha {
     }
 
     public Ficha(int x, int y) {
+        this.caracter = ' ';
         this.x = x;
         this.y = y;
     }

@@ -11,15 +11,17 @@ package connect4;
  */
 public class Jugador {
     private String nombre;
-    private int partidasGanadas;
-    private int tiradas;
+    private int partidasGanadas=0;
+    private int tiradas=0;
 
-    public Jugador(String nombre, int partidasGanadas, int tiradas) {
+    public Jugador(String nombre) {
+        this.nombre = nombre;
+    }
+    public Jugador(String nombre,int partidasGanadas,int tiradas){
         this.nombre = nombre;
         this.partidasGanadas = partidasGanadas;
         this.tiradas = tiradas;
     }
-
     public String getNombre() {
         return nombre;
     }
@@ -33,7 +35,7 @@ public class Jugador {
     }
 
     public void setPartidasGanadas() {
-        this.partidasGanadas = this.partidasGanadas+1;  
+        this.partidasGanadas++;  
     }
 
     public int getTiradas() {
@@ -41,12 +43,12 @@ public class Jugador {
     }
 
     public void setTiradas() {
-        this.tiradas = this.tiradas + 1;
+        this.tiradas++;
     }
 
     @Override
     public String toString() {
-        return "Jugador{" + "nombre=" + nombre + ", partidasGanadas=" + partidasGanadas + ", tiradas=" + tiradas + '}';
+        return "Nick: "+nombre+ ", Partidas Ganadas: "+partidasGanadas+", Tiradas: "+tiradas;
     }
    
 

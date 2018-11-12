@@ -15,10 +15,11 @@ public class Casilla {
 
     public Casilla() {
         ocupada = false;
+        this.ficha = new Ficha();
     }
 
     public Casilla(Ficha ficha) {
-        this.ficha = ficha;
+        this.setFicha(ficha);
     }
 
     public boolean estaOcupada() {
