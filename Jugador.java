@@ -11,47 +11,34 @@ package connecta4;
  */
 public class Jugador {
     
-    private String jugador1;
-    private String jugador2;
+    private String nombre;
     private int partidasGanadas;
     private int tiradas;
-    private String fichaJug1;
-    private String fichaJug2;
+    private Ficha ficha;
 
     public Jugador() {
     }
 
-    public Jugador(String jugador1, String jugador2) {
-        this.jugador1 = jugador1;
-        this.jugador2 = jugador2;
-        this.fichaJug2 = "X";
-        this.fichaJug1 = "0";
-        this.partidasGanadas = 0;
-        this.tiradas = 0;
+    public Jugador(String nombre, int partidasGanadas, int tiradas) {
+        this.nombre = nombre;
+        this.partidasGanadas = partidasGanadas;
+        this.tiradas = tiradas;
     }
 
-    public String getFichaJug1() {
-        return fichaJug1;
+    public Ficha getFicha() {
+        return ficha;
     }
 
-    public String getFichaJug2() {
-        return fichaJug2;
+    public void setFicha(Ficha ficha) {
+        this.ficha = ficha;
+    }
+    
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getJugador1() {
-        return jugador1;
-    }
-
-    public void setJugador1(String jugador1) {
-        this.jugador1 = jugador1;
-    }
-
-    public String getJugador2() {
-        return jugador2;
-    }
-
-    public void setJugador2(String jugador2) {
-        this.jugador2 = jugador2;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getPartidasGanadas() {
