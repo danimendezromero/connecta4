@@ -7,17 +7,12 @@ package connecta4;
 
 /**
  *
- * @author Dani Méndez Romero
+ * @author eduardo torres
  */
 public class Jugador {
-    
     private String nombre;
     private int partidasGanadas;
     private int tiradas;
-    private Ficha ficha;
-
-    public Jugador() {
-    }
 
     public Jugador(String nombre, int partidasGanadas, int tiradas) {
         this.nombre = nombre;
@@ -25,14 +20,6 @@ public class Jugador {
         this.tiradas = tiradas;
     }
 
-    public Ficha getFicha() {
-        return ficha;
-    }
-
-    public void setFicha(Ficha ficha) {
-        this.ficha = ficha;
-    }
-    
     public String getNombre() {
         return nombre;
     }
@@ -45,22 +32,24 @@ public class Jugador {
         return partidasGanadas;
     }
 
-    public void setPartidasGanadas(boolean partidaganada) {
-        if (partidaganada==true) {
-           this.partidasGanadas = this.partidasGanadas+1; 
-        }
+    public void setPartidasGanadas(int partidasGanadas) {
+        this.partidasGanadas = partidasGanadas;
     }
 
     public int getTiradas() {
         return tiradas;
     }
 
-    public void setTiradas() {
-        this.tiradas=this.tiradas+1;
+    public void setTiradas(int tiradas) {
+        this.tiradas = tiradas;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Jugador{" + "nombre=" + nombre + ", partidasGanadas=" + partidasGanadas + ", tiradas=" + tiradas + '}';
+    }
+   
+
     
     
 }
