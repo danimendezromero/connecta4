@@ -7,7 +7,7 @@ package connect4;
 
 /**
  *
- * @author eduardo torres
+ * @author dani mendez
  */
 public class Jugador {
     private String nombre;

@@ -22,9 +22,6 @@ public class Ficha {
         this.x = x;
         this.y = y;
     }
-
-    
-
     public char getCaracter() {
         return caracter;
     }
