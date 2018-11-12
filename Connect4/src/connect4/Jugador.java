@@ -32,16 +32,16 @@ public class Jugador {
         return partidasGanadas;
     }
 
-    public void setPartidasGanadas(int partidasGanadas) {
-        this.partidasGanadas = partidasGanadas;
+    public void setPartidasGanadas() {
+        this.partidasGanadas = this.partidasGanadas+1;  
     }
 
     public int getTiradas() {
         return tiradas;
     }
 
-    public void setTiradas(int tiradas) {
-        this.tiradas = tiradas;
+    public void setTiradas() {
+        this.tiradas = this.tiradas + 1;
     }
 
     @Override
