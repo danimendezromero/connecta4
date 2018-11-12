@@ -7,7 +7,7 @@ package connect4;
 
 /**
  *
- * @author Mofitex
+ * @author Sergi / comprobacion dani
  */
 public class Tablero {
     private Casilla [][] casillas;

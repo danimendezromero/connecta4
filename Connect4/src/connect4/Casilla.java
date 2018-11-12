@@ -7,7 +7,7 @@ package connect4;
 
 /**
  *
- * @author Mofitex
+ * @author sergi
  */
 public class Casilla {
     private boolean ocupada;
