@@ -219,16 +219,48 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
             if (win) {
                 System.out.println("Ha ganado el jugador 1!");
                 j1.setPartidasGanadas();
+                ArrayList<Jugador> sobreescribir = new ArrayList();
+                boolean encontrado3 = false;
+                FileReader lector3 = new FileReader("ranking.txt");
+                BufferedReader br3 = new BufferedReader(lector3);
+                //lo leemos linea por linea
+                String linea3 = br3.readLine();
+                String[] datos3 = null;
+                //se crea un bucle para cada linea donde si la linea no esta vacia entrara dentro del while
+                while (linea3 != null) {
+                    datos3 = linea3.split(";");
+                    Jugador jugadores3 = new Jugador(datos3[0], Integer.parseInt(datos3[1]), Integer.parseInt(datos3[2]));
+                    if (j1.getNombre().equals(datos3[0])) {
+                        int numGanadas = Integer.parseInt(datos3[1]) + j1.getPartidasGanadas();
+                        int tiradas = Integer.parseInt(datos3[2]) + j1.getTiradas();
+                        jugadores3 = new Jugador(datos3[0], numGanadas, tiradas);
+                        System.out.println(jugadores3.toString());
+                        encontrado3 = true;
+                        sobreescribir.add(jugadores3);
+                    } else {
+                        sobreescribir.add(jugadores3);
+                    }
 
-                String jugador = nombre1 + ";" + j1.getPartidasGanadas() + ";" + j1.getTiradas();
-                FileWriter fichero = null;
-                BufferedWriter bw = null;
-                fichero = new FileWriter("ranking.txt", true);
-                bw = new BufferedWriter(fichero);
-                bw.write(jugador);
-                bw.newLine();
-                bw.close();
-                System.out.println(jugador);
+                    linea3 = br3.readLine();
+                    //salto de linea
+                }
+                System.out.println(j1.toString());
+                Jugador c1 = null;
+                for (int i = 0; i < sobreescribir.size(); i++) {
+                    c1 = sobreescribir.get(i);
+                    String nombre = c1.getNombre();
+                    int numGanadas = c1.getPartidasGanadas();
+                    int tiradas = c1.getTiradas();
+                    String JugadorCompleto = nombre + ";" + numGanadas + ";" + tiradas;
+                    FileWriter fichero = null;
+                    BufferedWriter bw = null;
+                    fichero = new FileWriter("ranking.txt");
+                    bw = new BufferedWriter(fichero);
+                    bw.write(JugadorCompleto);
+                    bw.newLine();
+                    bw.close();
+                }
+
             } else {
                 System.out.println(t.toString());
                 System.out.println("Jugador 2: Introduce la columna para insertar ficha (1-4)");
@@ -242,15 +274,47 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                 if (win) {
                     System.out.println("Ha ganado el jugador 2!");
                     j2.setPartidasGanadas();
-                    String jugador = nombre2 + ";" + j2.getPartidasGanadas() + ";" + j2.getTiradas();
-                    FileWriter fichero = null;
-                    BufferedWriter bw = null;
-                    fichero = new FileWriter("ranking.txt", true);
-                    bw = new BufferedWriter(fichero);
-                    bw.write(jugador);
-                    bw.newLine();
-                    bw.close();
-                    System.out.println(jugador);
+                    ArrayList<Jugador> sobreescribir = new ArrayList();
+                    boolean encontrado3 = false;
+                    FileReader lector3 = new FileReader("ranking.txt");
+                    BufferedReader br3 = new BufferedReader(lector3);
+                    //lo leemos linea por linea
+                    String linea3 = br3.readLine();
+                    String[] datos3 = null;
+                    //se crea un bucle para cada linea donde si la linea no esta vacia entrara dentro del while
+                    while (linea3 != null) {
+                        datos3 = linea3.split(";");
+                        Jugador jugadores3 = new Jugador(datos3[0], Integer.parseInt(datos3[1]), Integer.parseInt(datos3[2]));
+                        if (j1.getNombre().equals(datos3[0])) {
+                            int numGanadas = Integer.parseInt(datos3[1]) + j2.getPartidasGanadas();
+                            int tiradas = Integer.parseInt(datos3[2]) + j2.getTiradas();
+                            jugadores3 = new Jugador(datos3[0], numGanadas, tiradas);
+                            System.out.println(jugadores3.toString());
+                            encontrado3 = true;
+                            sobreescribir.add(jugadores3);
+                        } else {
+                            sobreescribir.add(jugadores3);
+                        }
+
+                        linea3 = br3.readLine();
+                        //salto de linea
+                    }
+                    System.out.println(j2.toString());
+                    Jugador c1 = null;
+                    for (int i = 0; i < sobreescribir.size(); i++) {
+                        c1 = sobreescribir.get(i);
+                        String nombre = c1.getNombre();
+                        int numGanadas = c1.getPartidasGanadas();
+                        int tiradas = c1.getTiradas();
+                        String JugadorCompleto = nombre + ";" + numGanadas + ";" + tiradas;
+                        FileWriter fichero = null;
+                        BufferedWriter bw = null;
+                        fichero = new FileWriter("ranking.txt");
+                        bw = new BufferedWriter(fichero);
+                        bw.write(JugadorCompleto);
+                        bw.newLine();
+                        bw.close();
+                    }
                 }
             }
 
