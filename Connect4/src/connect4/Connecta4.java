@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import static connect4.LecturaYEscrituraFicheros.cargaRanking;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,7 +30,7 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
      */
     public static void main(String[] args) throws IOException {
         // llamamos a los metodos
-        
+
         cargaRanking();
         muestraMenu();
     }
@@ -50,9 +52,10 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
         bw.write(nuevoJugador);
         bw.newLine();
         bw.close();
-        
+
         ranking.add(auxJugador);
     }
+
     public static void muestraMenu() throws IOException {
         //MENU PARA EL USUARIO
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -82,7 +85,7 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                 case 4:
                     System.out.println("Se ha salido del programa con éxito.");
                     break;
-                       
+
                 default:
                     System.out.println("Valor incorrecto.");
                     break;
@@ -90,6 +93,7 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
 
         }
     }
+
     public static void imprimeArrayListRanking() {
         //imprime todos los jugadores del ArrayList ranking.
         Jugador c1 = null;
@@ -98,103 +102,159 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
             System.out.println(c1.toString());
         }
     }
-    public static Tablero crearTablero(){
+
+    public static Tablero crearTablero() {
         Casilla[][] board = new Casilla[4][4];
-                 
-                 for (int x = 0; x < 4; x++) {
-                    for (int y = 0; y < 4; y++) {
-                        Casilla occupiedSquare = new Casilla();
-                        board[x][y] = occupiedSquare;
-                    }
-                }
+
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
+                Casilla occupiedSquare = new Casilla();
+                board[x][y] = occupiedSquare;
+            }
+        }
         Tablero t = new Tablero(board);
         return t;
     }
-    public static void jugar(Tablero t){
+
+    public static void jugar(Tablero t) throws FileNotFoundException, IOException {
+        boolean encontrado = false;
+        boolean encontrado2 = false;
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduce el nombre del jugador 1");
         String nombre1 = sc.nextLine();
-        //leer fichero buscando el nombre
-        /*
-        if(value==nombre1){
-            System.out.println("Welcome back player 1");
-            Jugador j1 = new Jugador(nombre,partidasGanadas,tiradas);
+        int numGanadas1 = 0, numGanadas2 = 0;
+        int tiradas1 = 0, tiradas2 = 0;
+
+        FileReader lector = new FileReader("ranking.txt");
+        BufferedReader br = new BufferedReader(lector);
+        //lo leemos linea por linea
+        String linea = br.readLine();
+        String[] datos = null;
+        //se crea un bucle para cada linea donde si la linea no esta vacia entrara dentro del while
+        while (linea != null) {
+            datos = linea.split(";");
+            Jugador jugadores = new Jugador(datos[0], Integer.parseInt(datos[1]), Integer.parseInt(datos[2]));
+            if (nombre1.equals(datos[0])) {
+                encontrado = true;
+                nombre1 = datos[0];
+                numGanadas1 = Integer.parseInt(datos[1]);
+                tiradas1 = Integer.parseInt(datos[2]);
+                break;
+            } else {
+
+                linea = br.readLine();
+                //salto de linea
+            }
         }
-        */
-        Jugador j1 = new Jugador(nombre1);
+        if (encontrado == false) {
+
+            Jugador j1 = new Jugador(nombre1, numGanadas1, tiradas1);
+        } else {
+            System.out.println("Welcome back player 1");
+
+        }
+        Jugador j1 = new Jugador(nombre1, numGanadas1, tiradas1);
         System.out.println("Introduce el nombre del jugador 2");
         String nombre2 = sc.nextLine();
-        //leer fichero buscando el nombre
-        /*
-        if(value==nombre2){
-            System.out.println("Welcome back player 2");
-            Jugador j2 = new Jugador(nombre,partidasGanadas,tiradas);
+
+        FileReader lector2 = new FileReader("ranking.txt");
+        BufferedReader br2 = new BufferedReader(lector2);
+        //lo leemos linea por linea
+        String linea2 = br2.readLine();
+        String[] datos2 = null;
+        //se crea un bucle para cada linea donde si la linea no esta vacia entrara dentro del while
+        while (linea2 != null) {
+            datos2 = linea2.split(";");
+            Jugador jugadores2 = new Jugador(datos2[0], Integer.parseInt(datos2[1]), Integer.parseInt(datos2[2]));
+            if (nombre2.equals(datos2[0])) {
+                encontrado2 = true;
+                nombre2 = datos2[0];
+                numGanadas2 = Integer.parseInt(datos2[1]);
+                tiradas2 = Integer.parseInt(datos2[2]);
+                break;
+            } else {
+
+                linea2 = br.readLine();
+                //salto de linea
+            }
         }
-        */
-        Jugador j2 = new Jugador(nombre2);
-        
-        boolean bien=false;
-        char ficha1=' ';
-        char ficha2=' ';
-        while(!bien){
+        if (encontrado2 == false) {
+
+            Jugador j2 = new Jugador(nombre2, numGanadas2, tiradas2);
+        } else {
+            System.out.println("Welcome back player 2");
+
+        }
+        Jugador j2 = new Jugador(nombre2, numGanadas2, tiradas2);
+        boolean bien = false;
+        char ficha1 = ' ';
+        char ficha2 = ' ';
+        while (!bien) {
             System.out.println("Jugador1 escoje ficha (X/O)");
             ficha1 = sc.next().charAt(0);
-            if(ficha1=='X' || ficha1=='O'){
-                bien=true;
-                if(ficha1=='X'){
+            if (ficha1 == 'X' || ficha1 == 'O') {
+                bien = true;
+                if (ficha1 == 'X') {
                     ficha2 = 'O';
-                }else{
+                } else {
                     ficha2 = 'X';
                 }
-               
-            }else{
+
+            } else {
                 System.out.println("Aprende a escribir.");
             }
         }
-        
-        boolean win=false;
-        while(!win){
+
+        boolean win = false;
+        while (!win) {
             System.out.println(t.toString());
             System.out.println("Jugador 1: Introduce la columna para insertar ficha (1-4)");
             int x1 = sc.nextInt();
             x1--;
             sc.nextLine();
-            Ficha f = new Ficha(ficha1,x1,0);
+            Ficha f = new Ficha(ficha1, x1, 0);
             t.comprobarColumna(x1, f);
             j1.setTiradas();
             win = t.comprobar4();
-            if(win){
+            if (win) {
                 System.out.println("Ha ganado el jugador 1!");
                 j1.setPartidasGanadas();
-                //Guardar en fichero
-                /*
-                    j1.getNombre();
-                    j1.getPartidasGanadas();
-                    j1.getTiradas();
-                */
-            }else{
-              System.out.println(t.toString());
+
+                String jugador = nombre1 + ";" + j1.getPartidasGanadas() + ";" + j1.getTiradas();
+                FileWriter fichero = null;
+                BufferedWriter bw = null;
+                fichero = new FileWriter("ranking.txt", true);
+                bw = new BufferedWriter(fichero);
+                bw.write(jugador);
+                bw.newLine();
+                bw.close();
+                System.out.println(jugador);
+            } else {
+                System.out.println(t.toString());
                 System.out.println("Jugador 2: Introduce la columna para insertar ficha (1-4)");
                 int x2 = sc.nextInt();
                 x2--;
                 sc.nextLine();
-                Ficha f2 = new Ficha(ficha2,x2,0);
+                Ficha f2 = new Ficha(ficha2, x2, 0);
                 t.comprobarColumna(x2, f2);
                 j2.setTiradas();
                 win = t.comprobar4();
-                if(win){
+                if (win) {
                     System.out.println("Ha ganado el jugador 2!");
                     j2.setPartidasGanadas();
-                    //Guardar en fichero
-                    /*
-                        j1.getNombre();
-                        j1.getPartidasGanadas();
-                        j1.getTiradas();
-                    */
-                }  
+                    String jugador = nombre2 + ";" + j2.getPartidasGanadas() + ";" + j2.getTiradas();
+                    FileWriter fichero = null;
+                    BufferedWriter bw = null;
+                    fichero = new FileWriter("ranking.txt", true);
+                    bw = new BufferedWriter(fichero);
+                    bw.write(jugador);
+                    bw.newLine();
+                    bw.close();
+                    System.out.println(jugador);
+                }
             }
-            
+
         }
-        
+
     }
 }
