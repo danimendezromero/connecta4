@@ -150,7 +150,7 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
 
             Jugador j1 = new Jugador(nombre1, numGanadas1, tiradas1);
         } else {
-            System.out.println("Welcome back player 1");
+            System.out.println("Welcome back "+nombre1);
 
         }
         Jugador j1 = new Jugador(nombre1, numGanadas1, tiradas1);
@@ -274,6 +274,7 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                 if (win) {
                     System.out.println("Ha ganado el jugador 2!");
                     j2.setPartidasGanadas();
+                    
                     ArrayList<Jugador> sobreescribir = new ArrayList();
                     boolean encontrado3 = false;
                     FileReader lector3 = new FileReader("ranking.txt");

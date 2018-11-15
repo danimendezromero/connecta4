@@ -13,10 +13,11 @@ public class Jugador {
     private String nombre;
     private int partidasGanadas=0;
     private int tiradas=0;
-
+    private char Ficha;
     public Jugador(String nombre) {
         this.nombre = nombre;
     }
+
     public Jugador(String nombre,int partidasGanadas,int tiradas){
         this.nombre = nombre;
         this.partidasGanadas = partidasGanadas;
@@ -45,7 +46,14 @@ public class Jugador {
     public void setTiradas() {
         this.tiradas++;
     }
+    
+    public char getFicha() {
+        return Ficha;
+    }
 
+    public void setFicha(char Ficha) {
+        this.Ficha = Ficha;
+    }
     @Override
     public String toString() {
         return "Nick: "+nombre+ ", Partidas Ganadas: "+partidasGanadas+", Tiradas: "+tiradas;
