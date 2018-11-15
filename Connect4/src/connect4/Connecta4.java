@@ -31,29 +31,7 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
     public static void main(String[] args) throws IOException {
         // llamamos a los metodos
 
-        cargaRanking();
         muestraMenu();
-    }
-
-    public static void ActualizarRanking() throws IOException {
-        //Abro el lector de consola
-        BufferedReader datosUsuario = new BufferedReader(new InputStreamReader(System.in));
-        FileWriter fichero = null;
-        BufferedWriter bw = null;
-        System.out.println("Introduce su nombre:");
-        String nombre = datosUsuario.readLine();
-        auxJugador = new Jugador(nombre);
-        String nuevoJugador = nombre + ";" + auxJugador.getPartidasGanadas() + ";" + auxJugador.getTiradas();
-
-        //Al llegar a este punto introducimos los datos en el fichero clientes.txt
-        //Abrimos el FileWriter y pasamos los datos.
-        fichero = new FileWriter("ranking.txt", true);
-        bw = new BufferedWriter(fichero);
-        bw.write(nuevoJugador);
-        bw.newLine();
-        bw.close();
-
-        ranking.add(auxJugador);
     }
 
     public static void muestraMenu() throws IOException {
@@ -62,27 +40,24 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
 
         int opcion = 0;
 
-        while (opcion != 4) {
+        while (opcion != 3) {
             System.out.println("MENU");
             System.out.println("1 - Jugar.");
-            System.out.println("2 - Añadir Jugador al Ranking.");//no deberia existir
-            System.out.println("3 - Mostrar Ranking.");
-            System.out.println("4 - Salir.");
+            System.out.println("2 - Mostrar Ranking.");
+            System.out.println("3 - Salir.");
             opcion = Integer.parseInt(br.readLine());
 
             switch (opcion) {
                 case 1:
                     Tablero t = crearTablero();
+
                     jugar(t);
                     break;
                 case 2:
-                    ActualizarRanking();
-                    break;
 
-                case 3:
                     imprimeArrayListRanking();
                     break;
-                case 4:
+                case 3:
                     System.out.println("Se ha salido del programa con éxito.");
                     break;
 
@@ -94,13 +69,15 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
         }
     }
 
-    public static void imprimeArrayListRanking() {
+    public static void imprimeArrayListRanking() throws IOException {
+        cargaRanking();
         //imprime todos los jugadores del ArrayList ranking.
         Jugador c1 = null;
         for (int i = 0; i < ranking.size(); i++) {
             c1 = ranking.get(i);
             System.out.println(c1.toString());
         }
+        ranking.clear();
     }
 
     public static Tablero crearTablero() {
@@ -150,7 +127,7 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
 
             Jugador j1 = new Jugador(nombre1, numGanadas1, tiradas1);
         } else {
-            System.out.println("Welcome back "+nombre1);
+            System.out.println("Welcome back " + nombre1);
 
         }
         Jugador j1 = new Jugador(nombre1, numGanadas1, tiradas1);
@@ -207,16 +184,21 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
 
         boolean win = false;
         while (!win) {
+
             System.out.println(t.toString());
             System.out.println("Jugador 1: Introduce la columna para insertar ficha (1-4)");
             int x1 = sc.nextInt();
+            while (x1 > 4 || x1 < 1) {
+                System.out.println("Jugador 1: Introduce la columna para insertar ficha CORRECTAMENTE (1-4)");
+                x1 = sc.nextInt();
+            }
             x1--;
             sc.nextLine();
             Ficha f = new Ficha(ficha1, x1, 0);
             t.comprobarColumna(x1, f);
             j1.setTiradas();
-            System.out.println(j1.toString());
             win = t.comprobar4();
+
             if (win) {
                 System.out.println("Ha ganado el jugador 1!");
                 j1.setPartidasGanadas();
@@ -232,21 +214,33 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                     datos3 = linea3.split(";");
                     Jugador jugadores3 = new Jugador(datos3[0], Integer.parseInt(datos3[1]), Integer.parseInt(datos3[2]));
                     if (j1.getNombre().equals(datos3[0])) {
-                        int numGanadas = Integer.parseInt(datos3[1]) + j1.getPartidasGanadas();
-                        int tiradas = Integer.parseInt(datos3[2]) + j1.getTiradas();
+                        int numGanadas = j1.getPartidasGanadas();
+                        int tiradas = j1.getTiradas();
                         jugadores3 = new Jugador(datos3[0], numGanadas, tiradas);
-                        System.out.println(jugadores3.toString());
                         encontrado3 = true;
                         sobreescribir.add(jugadores3);
                     } else {
+
                         sobreescribir.add(jugadores3);
                     }
 
                     linea3 = br3.readLine();
                     //salto de linea
                 }
-                
+                if (encontrado3 != true) {
+                    Jugador j3 = new Jugador(j1.getNombre(), j1.getPartidasGanadas(), j1.getTiradas());
+                    Jugador j4 = new Jugador(j2.getNombre(), j2.getPartidasGanadas(), j2.getTiradas());
+                    sobreescribir.add(j3);
+                    sobreescribir.add(j4);
+                } else {
+                }
+                System.out.println(j1.toString());
                 Jugador c1 = null;
+                FileWriter fichero2 = null;
+                BufferedWriter bw2 = null;
+                fichero2 = new FileWriter("ranking.txt");
+                bw2 = new BufferedWriter(fichero2);
+
                 for (int i = 0; i < sobreescribir.size(); i++) {
                     c1 = sobreescribir.get(i);
                     String nombre = c1.getNombre();
@@ -255,7 +249,7 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                     String JugadorCompleto = nombre + ";" + numGanadas + ";" + tiradas;
                     FileWriter fichero = null;
                     BufferedWriter bw = null;
-                    fichero = new FileWriter("ranking.txt");
+                    fichero = new FileWriter("ranking.txt", true);
                     bw = new BufferedWriter(fichero);
                     bw.write(JugadorCompleto);
                     bw.newLine();
@@ -263,19 +257,25 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                 }
 
             } else {
+
                 System.out.println(t.toString());
                 System.out.println("Jugador 2: Introduce la columna para insertar ficha (1-4)");
                 int x2 = sc.nextInt();
+                while (x2 > 4 || x2 < 1) {
+                    System.out.println("Jugador 2: Introduce la columna para insertar ficha CORRECTAMENTE (1-4)");
+                    x2 = sc.nextInt();
+                }
                 x2--;
                 sc.nextLine();
                 Ficha f2 = new Ficha(ficha2, x2, 0);
                 t.comprobarColumna(x2, f2);
                 j2.setTiradas();
                 win = t.comprobar4();
+
                 if (win) {
                     System.out.println("Ha ganado el jugador 2!");
                     j2.setPartidasGanadas();
-                    
+
                     ArrayList<Jugador> sobreescribir = new ArrayList();
                     boolean encontrado3 = false;
                     FileReader lector3 = new FileReader("ranking.txt");
@@ -287,11 +287,10 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                     while (linea3 != null) {
                         datos3 = linea3.split(";");
                         Jugador jugadores3 = new Jugador(datos3[0], Integer.parseInt(datos3[1]), Integer.parseInt(datos3[2]));
-                        if (j1.getNombre().equals(datos3[0])) {
-                            int numGanadas = Integer.parseInt(datos3[1]) + j2.getPartidasGanadas();
-                            int tiradas = Integer.parseInt(datos3[2]) + j2.getTiradas();
+                        if (j2.getNombre().equals(datos3[0])) {
+                            int numGanadas = j2.getPartidasGanadas();
+                            int tiradas = j2.getTiradas();
                             jugadores3 = new Jugador(datos3[0], numGanadas, tiradas);
-                            System.out.println(jugadores3.toString());
                             encontrado3 = true;
                             sobreescribir.add(jugadores3);
                         } else {
@@ -301,8 +300,19 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                         linea3 = br3.readLine();
                         //salto de linea
                     }
+                    
+                    if (encontrado3 != true) {
+                        Jugador j3 = new Jugador(j2.getNombre(), j2.getPartidasGanadas(), j2.getTiradas());
+                        sobreescribir.add(j3);
+                        Jugador j4 = new Jugador(j1.getNombre(), j1.getPartidasGanadas(), j1.getTiradas());
+                        sobreescribir.add(j4);
+                    }
                     System.out.println(j2.toString());
                     Jugador c1 = null;
+                    FileWriter fichero2 = null;
+                    BufferedWriter bw2 = null;
+                    fichero2 = new FileWriter("ranking.txt");
+                    bw2 = new BufferedWriter(fichero2);
                     for (int i = 0; i < sobreescribir.size(); i++) {
                         c1 = sobreescribir.get(i);
                         String nombre = c1.getNombre();
@@ -311,17 +321,18 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                         String JugadorCompleto = nombre + ";" + numGanadas + ";" + tiradas;
                         FileWriter fichero = null;
                         BufferedWriter bw = null;
-                        fichero = new FileWriter("ranking.txt");
+                        fichero = new FileWriter("ranking.txt", true);
                         bw = new BufferedWriter(fichero);
                         bw.write(JugadorCompleto);
                         bw.newLine();
                         bw.close();
                     }
-                }else {
+                } else {
                     if (t.comprobarTableroLleno()) {
                         break;
                     }
                 }
+
             }
 
         }
