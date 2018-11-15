@@ -150,7 +150,7 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
 
             Jugador j1 = new Jugador(nombre1, numGanadas1, tiradas1);
         } else {
-            System.out.println("Welcome back "+nombre1);
+            System.out.println("Welcome back " + nombre1);
 
         }
         Jugador j1 = new Jugador(nombre1, numGanadas1, tiradas1);
@@ -207,15 +207,21 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
 
         boolean win = false;
         while (!win) {
+
             System.out.println(t.toString());
             System.out.println("Jugador 1: Introduce la columna para insertar ficha (1-4)");
             int x1 = sc.nextInt();
+            while (x1 > 4 || x1 < 1) {
+                System.out.println("Jugador 1: Introduce la columna para insertar ficha CORRECTAMENTE (1-4)");
+                x1 = sc.nextInt();
+            }
             x1--;
             sc.nextLine();
             Ficha f = new Ficha(ficha1, x1, 0);
             t.comprobarColumna(x1, f);
             j1.setTiradas();
             win = t.comprobar4();
+
             if (win) {
                 System.out.println("Ha ganado el jugador 1!");
                 j1.setPartidasGanadas();
@@ -254,7 +260,7 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                     String JugadorCompleto = nombre + ";" + numGanadas + ";" + tiradas;
                     FileWriter fichero = null;
                     BufferedWriter bw = null;
-                    fichero = new FileWriter("ranking.txt");
+                    fichero = new FileWriter("ranking.txt", true);
                     bw = new BufferedWriter(fichero);
                     bw.write(JugadorCompleto);
                     bw.newLine();
@@ -262,19 +268,25 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                 }
 
             } else {
+
                 System.out.println(t.toString());
                 System.out.println("Jugador 2: Introduce la columna para insertar ficha (1-4)");
                 int x2 = sc.nextInt();
+                while (x2 > 4 || x2 < 1) {
+                    System.out.println("Jugador 2: Introduce la columna para insertar ficha CORRECTAMENTE (1-4)");
+                    x2 = sc.nextInt();
+                }
                 x2--;
                 sc.nextLine();
                 Ficha f2 = new Ficha(ficha2, x2, 0);
                 t.comprobarColumna(x2, f2);
                 j2.setTiradas();
                 win = t.comprobar4();
+
                 if (win) {
                     System.out.println("Ha ganado el jugador 2!");
                     j2.setPartidasGanadas();
-                    
+
                     ArrayList<Jugador> sobreescribir = new ArrayList();
                     boolean encontrado3 = false;
                     FileReader lector3 = new FileReader("ranking.txt");
@@ -310,13 +322,18 @@ public class Connecta4 implements LecturaYEscrituraFicheros {
                         String JugadorCompleto = nombre + ";" + numGanadas + ";" + tiradas;
                         FileWriter fichero = null;
                         BufferedWriter bw = null;
-                        fichero = new FileWriter("ranking.txt");
+                        fichero = new FileWriter("ranking.txt", true);
                         bw = new BufferedWriter(fichero);
                         bw.write(JugadorCompleto);
                         bw.newLine();
                         bw.close();
                     }
+                } else {
+                    if (t.comprobarTableroLleno()) {
+                        break;
+                    }
                 }
+
             }
 
         }
