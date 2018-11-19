@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author eduardo torres
+ * @author oriol, edu, sergi y Dani
  */
 public class Connecta4 implements LecturaYEscrituraFicheros {
 
